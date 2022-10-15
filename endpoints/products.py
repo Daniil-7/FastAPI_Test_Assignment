@@ -44,7 +44,7 @@ async def delete_product(id: int,
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not enough rights to delete a product")
     product = await product.get_by_id(id=id)
     not_found_exception = HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
-    if job is None:
+    if product is None:
         raise not_found_exception
     result = await products.delete(id=id)
     return {"status": True}

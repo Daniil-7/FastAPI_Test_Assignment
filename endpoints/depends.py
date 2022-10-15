@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException, status
 from repositories.users import UserRepository
 from repositories.jobs import JobRepository
 from repositories.products import ProductRepository
+from repositories.categories import CategoryRepository
 from db.base import database
 from core.security import JWTBearer, decode_access_token
 from models.user import User
@@ -14,6 +15,10 @@ def get_job_repository() -> JobRepository:
 
 def get_product_repository() -> ProductRepository:
     return ProductRepository(database)
+
+def get_category_repository() -> CategoryRepository:
+    return CategoryRepository(database)
+
 
 async def get_current_user(
     users: UserRepository = Depends(get_user_repository),
