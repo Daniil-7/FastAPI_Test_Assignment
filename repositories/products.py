@@ -16,6 +16,7 @@ class ProductRepository(BaseRepository):
             name=p.name,
             image=p.image,
             price=p.price,
+            category_id=p.category_id
         )
         values = {**product.dict()}
         values.pop("id", None)
@@ -31,6 +32,7 @@ class ProductRepository(BaseRepository):
             name=p.name,
             image=p.image,
             price=p.price,
+            category_id=p.category_id
         )
         values = {**product.dict()}
         values.pop("id", None)

@@ -6,6 +6,7 @@ class BaseProduct(BaseModel):
     name: str
     price: int
     image: str
+    category_id: int
 
 
 class Product(BaseProduct):

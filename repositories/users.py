@@ -21,7 +21,7 @@ class UserRepository(BaseRepository):
     async def create(self, u: UserIn) -> User:
         query = users.select().order_by(users.c.id.desc())
         last_user = await self.database.fetch_one(query)
-        id = last_user.id + 1
+        id = last_user.id + 1 if last_user else 0
         user = User(
             id=id,
             name=u.name,
