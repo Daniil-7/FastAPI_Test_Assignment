@@ -1,6 +1,5 @@
 from fastapi import Depends, HTTPException, status
 from repositories.users import UserRepository
-from repositories.jobs import JobRepository
 from repositories.products import ProductRepository
 from repositories.categories import CategoryRepository
 from db.base import database
@@ -10,10 +9,6 @@ from models.user import User
 
 def get_user_repository() -> UserRepository:
     return UserRepository(database)
-
-
-def get_job_repository() -> JobRepository:
-    return JobRepository(database)
 
 
 def get_product_repository() -> ProductRepository:
