@@ -9,6 +9,7 @@ class BaseJob(BaseModel):
     salary_to: int
     is_active: bool = True
 
+
 class Job(BaseJob):
     id: int
     user_id: int
@@ -18,4 +19,3 @@ class Job(BaseJob):
 
 class JobIn(BaseJob):
     pass
-    

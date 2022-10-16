@@ -7,7 +7,6 @@ from db.users import users
 
 
 class ProductRepository(BaseRepository):
-
     async def create(self, p: ProductIn) -> Product:
         product = Product(
             id=0,
@@ -16,7 +15,7 @@ class ProductRepository(BaseRepository):
             name=p.name,
             image=p.image,
             price=p.price,
-            category_id=p.category_id
+            category_id=p.category_id,
         )
         values = {**product.dict()}
         values.pop("id", None)
@@ -32,25 +31,25 @@ class ProductRepository(BaseRepository):
             name=p.name,
             image=p.image,
             price=p.price,
-            category_id=p.category_id
+            category_id=p.category_id,
         )
         values = {**product.dict()}
         values.pop("id", None)
         values.pop("created", None)
-        query = products.update().where(products.c.id==id).values(**values)
+        query = products.update().where(products.c.id == id).values(**values)
         await self.database.execute(query=query)
         return product
 
     async def get_all(self, limit: int = 100, skip: int = 0) -> List[Product]:
         query = products.select().limit(limit).offset(skip)
         return await self.database.fetch_all(query=query)
-    
+
     async def delete(self, id: int):
-        query = products.delete().where(products.c.id==id)
+        query = products.delete().where(products.c.id == id)
         return await self.database.execute(query=query)
 
     async def get_by_id(self, id: int) -> Optional[Product]:
-        query = products.select().where(products.c.id==id)
+        query = products.select().where(products.c.id == id)
         product = await self.database.fetch_one(query=query)
         if product is None:
             return None
