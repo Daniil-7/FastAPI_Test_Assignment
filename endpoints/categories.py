@@ -48,7 +48,7 @@ async def delete_category(
     current_user: User = Depends(get_current_user),
 ):
     check_is_superuser(current_user)
-    category = await category.get_by_id(id=id)
+    category = await categories.get_by_id(id=id)
     check_404(category)
     result = await categories.delete(id=id)
     return {"status": True}

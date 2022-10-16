@@ -4,6 +4,7 @@ from models.categories import Category, CategoryIn
 from db.categories import categories
 from .base import BaseRepository
 from db.users import users
+from db.products import products
 
 
 class CategoryRepository(BaseRepository):
@@ -41,6 +42,8 @@ class CategoryRepository(BaseRepository):
         return await self.database.fetch_all(query=query)
 
     async def delete(self, id: int):
+        products_query = products.delete().where(products.c.category_id == id)
+        await self.database.execute(query=products_query)
         query = categories.delete().where(categories.c.id == id)
         return await self.database.execute(query=query)
 
