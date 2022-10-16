@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from repositories.users import UserRepository
 from models.user import User, UserIn
 from .depends import get_user_repository, get_current_user
+from .errors import check_is_superuser, check_404
 
 
 router = APIRouter()
@@ -37,3 +38,16 @@ async def update_user(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found user"
         )
     return await users.update(id=id, u=user)
+
+
+@router.delete("/")
+async def delete_user(
+    id: int,
+    users: UserRepository = Depends(get_user_repository),
+    current_user: User = Depends(get_current_user),
+):
+    check_is_superuser(current_user)
+    user = await users.get_by_id(id=id)
+    check_404(user)
+    result = await users.delete(id=id)
+    return {"status": True}

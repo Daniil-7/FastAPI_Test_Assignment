@@ -34,7 +34,9 @@ class UserRepository(BaseRepository):
         values = {**user.dict()}
         # values.pop("id", None)
         query = users.insert().values(**values)
-        user.id = await self.database.execute(query)
+        # user.id = await self.database.execute(query)
+        await self.database.execute(query)
+        user.id = id
         return user
 
     async def update(self, id: int, u: UserIn) -> User:
@@ -53,6 +55,10 @@ class UserRepository(BaseRepository):
         query = users.update().where(users.c.id == id).values(**values)
         await self.database.execute(query)
         return user
+
+    async def delete(self, id: int):
+        query = users.delete().where(users.c.id == id)
+        return await self.database.execute(query=query)
 
     async def get_by_email(self, email: str) -> User:
         query = users.select().where(users.c.email == email)
