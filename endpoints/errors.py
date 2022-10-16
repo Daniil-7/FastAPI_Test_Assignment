@@ -3,7 +3,7 @@ from fastapi import  HTTPException, status
 
 
 def check_is_superuser(current_user):
-	if not current_user.is_company:
+	if not current_user.is_superuser:
 	        raise HTTPException(
 	            status_code=status.HTTP_401_UNAUTHORIZED,
 	            detail="Not enough rights to create a product",

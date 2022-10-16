@@ -8,9 +8,9 @@ class User(BaseModel):
     name: str
     email: EmailStr
     hashed_password: str
-    is_company: bool
-    created_at: datetime.datetime
-    updated_at: datetime.datetime
+    is_superuser: bool
+    created: datetime.datetime
+    updated: datetime.datetime
 
 
 class UserIn(BaseModel):
@@ -18,7 +18,7 @@ class UserIn(BaseModel):
     email: EmailStr
     password: constr(min_length=8)
     password2: str
-    is_company: bool = False
+    is_superuser: bool = False
 
     @validator("password2")
     def password_match(cls, v, values, **kwargs):

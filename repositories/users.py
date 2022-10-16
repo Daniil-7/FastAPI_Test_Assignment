@@ -27,9 +27,9 @@ class UserRepository(BaseRepository):
             name=u.name,
             email=u.email,
             hashed_password=hash_password(u.password),
-            is_company=u.is_company,
-            created_at=datetime.datetime.utcnow(),
-            updated_at=datetime.datetime.utcnow(),
+            is_superuser=u.is_superuser,
+            created=datetime.datetime.utcnow(),
+            updated=datetime.datetime.utcnow(),
         )
         values = {**user.dict()}
         # values.pop("id", None)
@@ -43,12 +43,12 @@ class UserRepository(BaseRepository):
             name=u.name,
             email=u.email,
             hashed_password=hash_password(u.password2),
-            is_company=u.is_company,
-            created_at=datetime.datetime.utcnow(),
-            updated_at=datetime.datetime.utcnow(),
+            is_superuser=u.is_superuser,
+            created=datetime.datetime.utcnow(),
+            updated=datetime.datetime.utcnow(),
         )
         values = {**user.dict()}
-        values.pop("created_at", None)
+        values.pop("created", None)
         values.pop("id", None)
         query = users.update().where(users.c.id == id).values(**values)
         await self.database.execute(query)
